@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Hindi Jokes</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Satisfy&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Original+Surfer&family=Permanent+Marker&family=Satisfy&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: #EEF2F7;
+
+        }
+
+        #container {
+            margin: 50px;
+            background: white;
+            border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.11),
+                0 2px 2px rgba(0, 0, 0, 0.11),
+                0 4px 4px rgba(0, 0, 0, 0.11),
+                0 6px 8px rgba(0, 0, 0, 0.11),
+                0 8px 16px rgba(0, 0, 0, 0.11);
+            padding: 40px;
+        }
+
+        #jokes {
+            font-family: 'Original Surfer', cursive;
+            font-size: 2em;
+            text-align: center;
+            font-weight: 400;
+        }
+
+        #title {
+
+            font-family: 'Satisfy', cursive;
+            text-align: center;
+            font-weight: 600;
+            margin-bottom: 10px;
+            text-decoration: underline;
+        }
+
+        #btn {
+            display: inline-block;
+            border-radius: 4px;
+            background-color: #f4511e;
+            border: none;
+            color: #FFFFFF;
+            text-align: center;
+            font-size: 26px;
+            padding: 10px;
+            width: 150px;
+            transition: all 0.5s;
+            cursor: pointer;
+            margin-top: 40px;
+            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.25),
+                0 2px 2px rgba(0, 0, 0, 0.20),
+                0 4px 4px rgba(0, 0, 0, 0.15),
+                0 8px 8px rgba(0, 0, 0, 0.10),
+                0 16px 16px rgba(0, 0, 0, 0.05);
+        }
+
+        #btn:hover {
+            background-color: #dd3b0a;
+            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08),
+                0 2px 2px rgba(0, 0, 0, 0.12),
+                0 4px 4px rgba(0, 0, 0, 0.16),
+                0 8px 8px rgba(0, 0, 0, 0.20);
+        }
+
+        #btn span {
+            cursor: pointer;
+            display: inline-block;
+            position: relative;
+            transition: 0.5s;
+        }
+
+        #btn span:after {
+            content: '\00bb';
+            position: absolute;
+            opacity: 0;
+            top: 0;
+            right: -20px;
+            transition: 0.5s;
+        }
+
+
+        #btn:hover span {
+            padding-right: 25px;
+        }
+
+        #btn:hover span:after {
+            opacity: 1;
+            right: 0;
+        }
+
+        #btn:focus {
+            outline: none;
+        }
+
+        @media screen and (min-width:1000px) {
+            #container {
+                margin: 0;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                -webkit-transform: translate(-50%, -50%);
+                transform: translate(-50%, -50%);
+            }
+        }
+
+        @media screen and (max-width:768px) {
+            #jokes {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container">
+        <h1 id="title">Loading Title...</h1>
+        <p id="jokes">Loading Joke...</p>
+        <button id="btn"><span>More</span></button>
+    </div>
+
+    <script>
+        const jokes = document.getElementById('jokes');
+        const title = document.getElementById('title');
+        const btn = document.getElementById('btn');
+        const generateJokes = () => {
+            const setHeader = {
+                headers: {
+                    Accept: "application/json"
+                }
+            }
+            fetch('https://tattijokes.herokuapp.com/randomJokes', setHeader)
+                .then((res) => res.json())
+                .then((data) => {
+                    jokes.innerHTML = data.joke.joke;
+                    title.innerHTML = data.joke.title;
+                })
+                .catch((error) => console.log(error))
+        }
+        btn.addEventListener('click', generateJokes);
+        generateJokes();
+
+
+    </script>
+</body>
+
+</html>
